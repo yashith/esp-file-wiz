@@ -1,4 +1,4 @@
-use std::{fs::File, io::Read};
+use std::{fs::File, io::Read, f32::consts::E, ops::Add};
 
 fn main() {
     println!("Hello, world!");
@@ -11,37 +11,31 @@ fn main() {
     file.read_to_end(&mut file_content).expect("cannot read fiel content");
 
 
-    const GRUP: &str = "GRUP";
-    const GRUP_VEC: &[u8] = GRUP.as_bytes();
+    println!("{:?}",check_tes(&file_content));
+    if check_tes(&file_content){
+    let li = find_groups(&file_content);
+    print!("{:?}",li);
 
-
-    match file_content.windows(GRUP_VEC.len()).find(|&window| window == GRUP_VEC){
-        Some(res) => println!("{:?}",res),
-        None => println!("Pattern not found using pattern matching"),
     }
-
-    for chunk in file_content.chunks(4){
-        //println!("{:?} = {:?}",grup_vec,chunk);
-        if(chunk.eq(GRUP_VEC)){
-            let memloc= chunk.as_ptr();
-            //print!("{:?}",chunk[3]);
-            
-            let lastmemloc = memloc.wrapping_add(std::mem::size_of::<u8>()*4 );//+std::mem::size_of::<u32>()
-            println!("{:?}",lastmemloc);
-            
-        }
-    }
-
-    
 }
-fn u32_to_vecu8(s:u32)->Vec<u8> {
-    
-    let mut out:Vec<u8> = Vec::new();
+fn check_tes(fc:&Vec<u8>) -> bool{
+   let testv ="TES4";
+   let tesv_v = testv.as_bytes();
+   //[..4] take next 4 locations from fc 
+   return fc[..4] ==*tesv_v;  
+}
+fn find_groups(fc:&Vec<u8>)->Vec<*const u8>{
+    let g = "GRUP";
+    let mut out = Vec::new();
+    for window in fc.windows(4){
+        if window==g.as_bytes(){
+            out.push(window.as_ptr());
+        }
 
-    out.push( ((s >> 24) & 0xFF) as u8);
-    out.push( ((s >> 16) & 0xFF) as u8);
-    out.push( ((s >> 8) & 0xFF) as u8);
-    out.push( (s & 0xFF) as u8);
-
-    out
+    }
+return out; 
+}
+fn get_group_size(gr_begining:*const u8)->u32{
+    let size:u32 =0; 
+    return size;
 }
