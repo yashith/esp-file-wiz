@@ -1,9 +1,9 @@
-use std::{fs::File, io::Read, f32::consts::E, ops::Add};
+use std::{fs::File, io::Read};
 
 fn main() {
     println!("Hello, world!");
 
-    let path = "D:\\Skyrim Se alll\\Mod Organizer 2\\Mods\\[Melodic] Mauree outfit SE 3BA\\[Melodic] Mauree outfit SE 3BA.esp";
+    let path = "C:\\Projects\\bsa-file-wiz\\[COCO] Pandora Box.esp[COCO] Lolita.esp";
 
     let mut file_content =  Vec:: new();
     let mut file = File::open(path).expect("could not read");
@@ -28,6 +28,7 @@ fn find_groups(fc:&Vec<u8>)->Vec<*const u8>{
     let g = "GRUP";
     let mut out = Vec::new();
     for window in fc.windows(4){
+        print!("{:?}", window);
         if window==g.as_bytes(){
             out.push(window.as_ptr());
         }
@@ -35,7 +36,7 @@ fn find_groups(fc:&Vec<u8>)->Vec<*const u8>{
     }
 return out; 
 }
-fn get_group_size(gr_begining:*const u8)->u32{
-    let size:u32 =0; 
-    return size;
-}
+// fn get_group_size(gr_begining:*const u8)->u32{
+//     let size:u32 =0; 
+//     return size;
+// }
