@@ -7,7 +7,7 @@ import dash
 from dash import html, Output, Input, dcc
 import dash_cytoscape as cyto
 
-tree = et.parse('approach.xml')
+tree = et.parse('resources/approach.xml')
 
 root = tree.getroot()
 groups = tree.findall('GRUP')
