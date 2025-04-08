@@ -1,17 +1,10 @@
-
 import xml.etree.ElementTree as et
-from Structs import Info
 import networkx as nx
-
-import dash
-from dash import html, Output, Input, dcc
-import dash_cytoscape as cyto
 
 tree = et.parse('resources/approach.xml')
 
 root = tree.getroot()
 groups = tree.findall('GRUP')
-
 
 #to get the maching pair of GRUP and DIAL
 def find_grup_for_dial(id,dial_grup_list):

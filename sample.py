@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as et
-
+ 
 tree = et.parse('Input.xml')
 
 root = tree.getroot()
