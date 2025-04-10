@@ -1,7 +1,23 @@
 import xml.etree.ElementTree as et
 import networkx as nx
+from utils import ts4_util,io
+import sys
 
-tree = et.parse('resources/approach.xml')
+args = sys.argv
+
+in_out = io.get_in_out_files(args)
+if(in_out == None):
+    print("Invalid argument count. Please provide input and out file names")
+    sys.exit()
+
+input_xml = in_out[0]
+output_graph = in_out[1]
+
+print(f"parsing file {input_xml}")
+
+
+
+tree = et.parse(input_xml)
 
 root = tree.getroot()
 groups = tree.findall('GRUP')
@@ -18,6 +34,9 @@ def find_grup_for_dial(id,dial_grup_list):
 global_variables = None 
 keywords= None 
 dialogues= None 
+
+master_list = ts4_util.get_master_list(root)
+print(master_list)
 
 for group in groups:
     if(group.get('label') == 'GLOB'):
@@ -126,7 +145,7 @@ final_elements = validate_elements(nodes,edges)
 
 
 def dash_to_nx(elements):
-    G = nx.Graph()
+    G = nx.DiGraph()
     for el in elements:
         data = el['data']
         if 'source' in data and 'target' in data:
@@ -136,7 +155,7 @@ def dash_to_nx(elements):
     return G
 
 G = dash_to_nx(final_elements)
-nx.write_graphml(G, 'approach.graphml')
+nx.write_graphml(G, output_graph)
 
 
 ################################################# Graph Generation ############################################
